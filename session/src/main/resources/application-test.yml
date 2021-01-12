@@ -1,0 +1,12 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+server:
+  port: 7009
+  servlet:
+    context-path: /pay/portal
+    session:
+      cookie:
+        path: /
+        name: xkypsession
