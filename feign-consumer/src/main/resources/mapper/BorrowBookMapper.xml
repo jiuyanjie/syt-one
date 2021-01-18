@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="com.bookManagerment.mapper.BorrowBookMapper" >
+    <select id="queryBorrowBooks"  resultType="BorrowBooks" >
+        select  borrow_books.*,books.number,DATEDIFF(due_time,now()) 'remainingDays'from borrow_books
+        join reader using(r_id)
+        join books using(b_id)
+        <where>
+            <if test="bb.bName != null and bb.bName != '' ">
+                and b_name like concat('%',#{bb.bName},'%')
+            </if>
+            <if test="bb.rName != null and bb.rName != ''">
+                <choose>
+                    <when test="isReader">
+                        and borrow_books.r_name = #{bb.rName}
+                    </when>
+                    <otherwise>
+                        and r_name like  concat('%',#{bb.rName},'%')
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="bb.remainingDays != null">
+                and remainingDays = #{bb.remainingDays}
+            </if>
+        </where>
+        order by remainingDays
+    </select>
+
+</mapper>

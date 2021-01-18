@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="com.bookManagerment.mapper.GiveBackBookMapper" >
+
+    <select id="queryGiveBackBooks"  resultType="GiveBackBooks" >
+        select  give_back_books.*,reader.r_name ,books.b_name,books.number from give_back_books
+        join reader using(r_id)
+        join books using(b_id)
+        <where>
+            <if test="gbb.bName != null and gbb.bName != '' ">
+                and b_name like concat('%',#{gbb.bName},'%')
+            </if>
+            <if test="gbb.rName != null and gbb.rName != ''">
+                <choose>
+                    <when test="isReader">
+                        and give_back_books.r_name = #{gbb.rName}
+                    </when>
+                    <otherwise>
+                        and r_name like  concat('%',#{gbb.rName},'%')
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="gbb.number != null and gbb.number!='' ">
+                and number = #{gbb.number}
+            </if>
+        </where>
+        order by due_time
+    </select>
+
+</mapper>

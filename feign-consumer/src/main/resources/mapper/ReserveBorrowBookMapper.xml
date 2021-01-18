@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="com.bookManagerment.mapper.ReserveBorrowBookMapper" >
+    <select id="queryReserveBorrowBooks" resultType="ReserveBorrowBooks" >
+        select rbb.*,r.r_name,b.b_name,b.number from reserve_borrow_books rbb
+        join reader r using(r_id)
+        join books b using(b_id)
+        <where>
+            <if test="bName !=null and bName!=''">
+                and b_name like concat('%',#{bName},'%')
+            </if>
+            <if test="rbbId !=null and rbbId!=''">
+                and rbb_Id = #{rbbId}
+            </if>
+            <if test="rName !=null and rName!=''">
+                and r_name = concat('%',#{rName},'%')
+            </if>
+        </where>
+        order by order_time
+    </select>
+
+</mapper>

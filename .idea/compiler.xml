@@ -6,19 +6,32 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="config-server" />
         <module name="common" />
         <module name="provider" />
-        <module name="consumer" />
         <module name="eureka" />
+        <module name="session" />
+        <module name="config-client" />
+        <module name="feign--consumer" />
+        <module name="feign-consumer" />
+        <module name="consumer" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="feign--consumer" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="-parameters" />
+      <module name="config-client" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="consumer" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="feign--consumer" options="-parameters" />
+      <module name="feign-consumer" options="-parameters" />
       <module name="provider" options="-parameters" />
+      <module name="session" options="-parameters" />
     </option>
   </component>
 </project>

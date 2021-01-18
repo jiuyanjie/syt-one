@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="com.bookManagerment.mapper.BookMapper" >
+<!-- id:方法名
+        parameterType:定义参数类型
+        resultType:返回值类型.
+
+        如果方法返回值是list,在resultType中写List的泛型,因为mybatis
+        对jdbc封装,一行一行读取数据
+        -->
+<select id="queryBooks" resultType="books" >
+        select * from books join book_type using(bt_Id)
+        <where>
+
+                <if test="book.btId !=null and book.btId>0">
+                       and bt_id = #{book.btId}
+                </if>
+                <if test="book.bName !=null and book.bName!=''">
+                        and b_name like concat('%',#{book.bName},'%')
+                </if>
+                <if test="book.publisher !=null and book.publisher!=''">
+                        and publisher like concat('%',#{book.publisher},'%')
+                </if>
+                <if test="book.number !=null and book.number!=''">
+                        and number = #{book.number}
+                </if>
+                <if test="status != null">
+                        and status = #{status}
+                </if>
+        </where>
+</select>
+
+</mapper>

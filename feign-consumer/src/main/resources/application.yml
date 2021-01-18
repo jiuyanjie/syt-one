@@ -1,0 +1,23 @@
+server:
+  port: 8085
+
+spring:
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+  application:
+    name: zuul
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.27:3306/syt14?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: 123
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
